@@ -1,0 +1,6 @@
+.DS_Store
+*.log
+__pycache__/
+.vscode/
+.pyc
+screenshot.png
