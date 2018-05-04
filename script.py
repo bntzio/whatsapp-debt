@@ -6,11 +6,15 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
 
-TARGET = 'WhatsApp Name'
+TARGETS = {'WhatsApp Name #1': 10, 'WhatsApp Name #2': 20, 'WhatsApp Name #3': 30}
 PRODUCTION = False
 SCANNED = False
 HOST = 'http://localhost:3000'
-MESSAGE = 'Your message'
+MESSAGE = "Beep Boop! I'm a robot, and I'm here to remind you that you owe money to Enrique. Please deposit $10 USD to bank account 4531-2321-3421-3421. Thanks!"
+MSG_SENT_COUNT = 0
+
+def get_message(target):
+    return MESSAGE.replace('$10', '$'+str(TARGETS.get(target)))
 
 if PRODUCTION is True:
     HOST = 'http://whatsapp-monitor.now.sh'
@@ -38,23 +42,21 @@ while SCANNED is False:
             print('Success!')
     except NoSuchElementException:
         pass
-search = browser.find_element_by_tag_name('input')
-search.click()
-search.send_keys(TARGET)
-chats = browser.find_elements_by_class_name('matched-text')
-found = False
-for chat in chats:
-    name = chat.text
-    if name == TARGET:
-        chat.click()
-        text_area = browser.find_element_by_xpath("//*[contains(text(), 'Type a message')]")
-        text_input_class = browser.execute_script("return arguments[0].nextSibling.classList[0]", text_area)
-        text_input = browser.find_element_by_class_name(text_input_class)
-        text_input.send_keys(MESSAGE)
-        text_input.send_keys(Keys.ENTER)
-        found = True
-        break
-if found == True:
-    print('Done!')
-else:
-    print('Oops. No chats found!')
+for target in TARGETS:
+    search = browser.find_element_by_tag_name('input')
+    search.click()
+    search.send_keys(target)
+    chats = browser.find_elements_by_class_name('matched-text')
+    for chat in chats:
+        name = chat.text
+        if name == target:
+            message = get_message(target)
+            chat.click()
+            text_area = browser.find_element_by_xpath("//*[contains(text(), 'Type a message')]")
+            text_input_class = browser.execute_script("return arguments[0].nextSibling.classList[0]", text_area)
+            text_input = browser.find_element_by_class_name(text_input_class)
+            text_input.send_keys(message)
+            text_input.send_keys(Keys.ENTER)
+            MSG_SENT_COUNT += 1
+            break
+print('Done! {}/{} people reminded!'.format(MSG_SENT_COUNT, len(TARGETS)))
