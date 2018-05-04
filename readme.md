@@ -10,7 +10,7 @@
 - [ ] Add deployment instructions
 - [ ] Update readme
 - [ ] Add GIF demo
-- [ ] Add MIT license
+- [x] Add MIT license
 
 ### Roadmap
 
