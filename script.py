@@ -1,3 +1,4 @@
+# DEPRECIATED!
 from urllib.parse import quote
 from time import sleep
 from pyperclip import copy
@@ -24,13 +25,14 @@ chrome_options.add_argument('--window-size=1920x1080')
 chrome_options.add_argument(
     'user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.1 Safari/537.36'
 )
-browser = webdriver.Chrome(chrome_options=chrome_options)
+browser = webdriver.Chrome(chrome_options=chrome_options,executable_path='/usr/local/bin/chromedriver')
 browser.get('https://web.whatsapp.com')
 while SCANNED is False:
     image = browser.find_element_by_tag_name('img')
     image_src = image.get_attribute('src')
     encoded = quote(image_src, safe='')
     url = HOST + '/' + encoded
+    print(url)
     copy(url)
     print('\nLink copied to your clipboard, you got 20 seconds to visit it and scan your QR code.')
     print('Waiting QR Scanning...')

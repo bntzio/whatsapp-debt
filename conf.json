@@ -1,0 +1,9 @@
+{
+  "default_xpath_text_area": "//footer/div/div[2]/div/div[2]",
+  "default_xpath_authenticated": "//*[text() = 'Keep your phone connected']",
+  "default_xpath_searchbar":"//div[@id='side']/div/div/label/div/div[2]",
+  "default_xpath_send_button":"/html/body/div[1]/div/div/div[4]/div/footer/div[1]/div[3]/button",
+  "default_xpath_target_user":"//span[contains(.,'%s')]",
+  "control_user": {"user":"Enrique","currency_format":"$","bank_account":"4531-2321-3421-3421"},
+  "kill_on_auth":"0"
+}
